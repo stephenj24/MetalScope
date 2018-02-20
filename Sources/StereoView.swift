@@ -144,9 +144,11 @@ public final class StereoView: UIView, SceneLoadable {
             height: Int(textureSize.height),
             mipmapped: true
         )
-        let texture = device.makeTexture(descriptor: textureDescriptor)
-
-        self.init(stereoTexture: texture)
+        if let texture = device.makeTexture(descriptor: textureDescriptor){
+            self.init(stereoTexture: texture)
+        }else{
+            self.init(device: device)
+        }
 
         let sceneScale = textureSize.width / (bounds.width * UIScreen.main.scale)
         scnView.transform = CGAffineTransform(scaleX: sceneScale, y: sceneScale)
